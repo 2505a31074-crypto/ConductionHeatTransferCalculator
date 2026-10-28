@@ -1,0 +1,93 @@
+import math
+
+def calculate_plane_wall():
+    print("\n--- Plane Wall Conduction ---")
+    try:
+        k = float(input("Enter thermal conductivity (k in W/m·K): "))
+        A = float(input("Enter surface area (A in m²): "))
+        T1 = float(input("Enter inner temperature (T1 in °C or K): "))
+        T2 = float(input("Enter outer temperature (T2 in °C or K): "))
+        L = float(input("Enter thickness of the wall (L in m): "))
+        
+        if L <= 0:
+            print("Error: Thickness must be greater than zero.")
+            return
+
+        # Q = k * A * (T1 - T2) / L
+        Q = (k * A * (T1 - T2)) / L
+        print(f" Heat transfer rate (Q): {Q:.2f} W")
+    except ValueError:
+        print("Invalid input! Please enter numeric values.")
+
+def calculate_cylindrical_wall():
+    print("\n--- Cylindrical Wall Conduction ---")
+    try:
+        k = float(input("Enter thermal conductivity (k in W/m·K): "))
+        L = float(input("Enter length of the cylinder (L in m): "))
+        T1 = float(input("Enter inner surface temperature (T1 in °C or K): "))
+        T2 = float(input("Enter outer surface temperature (T2 in °C or K): "))
+        r1 = float(input("Enter inner radius (r1 in m): "))
+        r2 = float(input("Enter outer radius (r2 in m): "))
+        
+        if r1 <= 0 or r2 <= 0:
+            print("Error: Radii must be greater than zero.")
+            return
+        if r2 <= r1:
+            print("Error: Outer radius (r2) must be greater than inner radius (r1).")
+            return
+
+        # Q = 2 * pi * k * L * (T1 - T2) / ln(r2 / r1)
+        Q = (2 * math.pi * k * L * (T1 - T2)) / math.log(r2 / r1)
+        print(f" Heat transfer rate (Q): {Q:.2f} W")
+    except ValueError:
+        print("Invalid input! Please enter numeric values.")
+
+def calculate_spherical_wall():
+    print("\n--- Spherical Wall Conduction ---")
+    try:
+        k = float(input("Enter thermal conductivity (k in W/m·K): "))
+        T1 = float(input("Enter inner surface temperature (T1 in °C or K): "))
+        T2 = float(input("Enter outer surface temperature (T2 in °C or K): "))
+        r1 = float(input("Enter inner radius (r1 in m): "))
+        r2 = float(input("Enter outer radius (r2 in m): "))
+        
+        if r1 <= 0 or r2 <= 0:
+            print("Error: Radii must be greater than zero.")
+            return
+        if r2 <= r1:
+            print("Error: Outer radius (r2) must be greater than inner radius (r1).")
+            return
+
+        # Q = 4 * pi * k * r1 * r2 * (T1 - T2) / (r2 - r1)
+        Q = (4 * math.pi * k * r1 * r2 * (T1 - T2)) / (r2 - r1)
+        print(f" Heat transfer rate (Q): {Q:.2f} W")
+    except ValueError:
+        print("Invalid input! Please enter numeric values.")
+
+def main():
+    while True:
+        print("\n========================================")
+        print("      CONDUCTION HEAT TRANSFER CALCULATOR")
+        print("========================================")
+        print("1. Plane Wall")
+        print("2. Cylindrical Wall")
+        print("3. Spherical Wall")
+        print("4. Exit")
+        
+        choice = input("Select the geometry (1-4): ").strip()
+        
+        if choice == '1':
+            calculate_plane_wall()
+        elif choice == '2':
+            calculate_cylindrical_wall()
+        elif choice == '3':
+            calculate_spherical_wall()
+        elif choice == '4':
+            print("Exiting program. Goodbye!")
+            break
+        else:
+            print("Invalid choice! Please choose an option between 1 and 4.")
+
+if __name__ == "__main__":
+    main()
+
